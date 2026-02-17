@@ -53,7 +53,7 @@ User Service API — приложение для управления польз
 ### Установка зависимостей
 1. Клонируйте репозиторий:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Flyseee/user-service
    cd user-service
    ```
    
