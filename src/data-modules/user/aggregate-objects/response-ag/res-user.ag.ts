@@ -8,7 +8,6 @@ export class ResUserAg {
     secondName!: string;
     birthday!: Date;
     email!: string;
-    password!: string;
     role!: UserRoles;
     status!: UserStatuses;
 }

@@ -1,6 +1,5 @@
-import {IsDate, IsEnum, IsNotEmpty, IsString} from "class-validator";
+import {IsDate, IsEmail, IsNotEmpty, IsString, MinLength} from "class-validator";
 import {Type} from "class-transformer";
-import {UserRoles} from "../../enums/user-roles.enum";
 
 export class RegisterDto {
     @IsString()
@@ -19,13 +18,10 @@ export class RegisterDto {
     @Type(() => Date)
     birthday!: Date;
 
-    @IsString()
-    @IsNotEmpty()
+    @IsEmail()
     email!: string;
 
     @IsString()
+    @MinLength(8)
     password!: string;
-
-    @IsEnum(UserRoles)
-    role!: UserRoles;
 }

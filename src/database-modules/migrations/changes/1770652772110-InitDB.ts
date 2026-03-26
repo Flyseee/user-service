@@ -4,9 +4,17 @@ export class InitDB1770652772110 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            CREATE TYPE user_role AS ENUM ('admin', 'user');
-            CREATE TYPE user_status AS ENUM ('active', 'inactive');
-        `)
+            DO $$ BEGIN
+                CREATE TYPE user_role AS ENUM ('admin', 'user');
+            EXCEPTION WHEN duplicate_object THEN NULL;
+            END $$;
+        `);
+        await queryRunner.query(`
+            DO $$ BEGIN
+                CREATE TYPE user_status AS ENUM ('active', 'inactive');
+            EXCEPTION WHEN duplicate_object THEN NULL;
+            END $$;
+        `);
         await queryRunner.query(`
             CREATE TABLE IF NOT EXISTS "user" (
                 id UUID PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
@@ -23,6 +31,9 @@ export class InitDB1770652772110 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`DROP TABLE IF EXISTS "user"`);
+        await queryRunner.query(`DROP TYPE IF EXISTS user_status`);
+        await queryRunner.query(`DROP TYPE IF EXISTS user_role`);
     }
 
 }
